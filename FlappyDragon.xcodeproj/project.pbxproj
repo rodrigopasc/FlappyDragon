@@ -13,9 +13,9 @@
 		A1A2F860210E78EF003EC166 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1A2F85E210E78EF003EC166 /* Main.storyboard */; };
 		A1A2F862210E78F0003EC166 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1A2F861210E78F0003EC166 /* Assets.xcassets */; };
 		A1A2F865210E78F0003EC166 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1A2F863210E78F0003EC166 /* LaunchScreen.storyboard */; };
-		A1A2F86F210E7917003EC166 /* hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A1A2F86C210E7916003EC166 /* hit.mp3 */; };
-		A1A2F870210E7917003EC166 /* music.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A1A2F86D210E7917003EC166 /* music.m4a */; };
-		A1A2F871210E7917003EC166 /* score.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A1A2F86E210E7917003EC166 /* score.mp3 */; };
+		A1D02365210F2A8500BFD8F6 /* score.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A1D02362210F2A8500BFD8F6 /* score.mp3 */; };
+		A1D02366210F2A8500BFD8F6 /* music.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A1D02363210F2A8500BFD8F6 /* music.m4a */; };
+		A1D02367210F2A8500BFD8F6 /* hit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A1D02364210F2A8500BFD8F6 /* hit.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,9 +27,9 @@
 		A1A2F861210E78F0003EC166 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1A2F864210E78F0003EC166 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A1A2F866210E78F0003EC166 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A1A2F86C210E7916003EC166 /* hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = hit.mp3; path = "../../../../../Downloads/Arquivos FlappyDragon/hit.mp3"; sourceTree = "<group>"; };
-		A1A2F86D210E7917003EC166 /* music.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = music.m4a; path = "../../../../../Downloads/Arquivos FlappyDragon/music.m4a"; sourceTree = "<group>"; };
-		A1A2F86E210E7917003EC166 /* score.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = score.mp3; path = "../../../../../Downloads/Arquivos FlappyDragon/score.mp3"; sourceTree = "<group>"; };
+		A1D02362210F2A8500BFD8F6 /* score.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = score.mp3; path = "../../../../../Downloads/Arquivos FlappyDragon/Arquivos FlappyDragon/score.mp3"; sourceTree = "<group>"; };
+		A1D02363210F2A8500BFD8F6 /* music.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = music.m4a; path = "../../../../../Downloads/Arquivos FlappyDragon/Arquivos FlappyDragon/music.m4a"; sourceTree = "<group>"; };
+		A1D02364210F2A8500BFD8F6 /* hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = hit.mp3; path = "../../../../../Downloads/Arquivos FlappyDragon/Arquivos FlappyDragon/hit.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,9 +62,9 @@
 		A1A2F853210E78EF003EC166 /* FlappyDragon */ = {
 			isa = PBXGroup;
 			children = (
-				A1A2F86C210E7916003EC166 /* hit.mp3 */,
-				A1A2F86D210E7917003EC166 /* music.m4a */,
-				A1A2F86E210E7917003EC166 /* score.mp3 */,
+				A1D02364210F2A8500BFD8F6 /* hit.mp3 */,
+				A1D02363210F2A8500BFD8F6 /* music.m4a */,
+				A1D02362210F2A8500BFD8F6 /* score.mp3 */,
 				A1A2F854210E78EF003EC166 /* AppDelegate.swift */,
 				A1A2F85A210E78EF003EC166 /* GameScene.swift */,
 				A1A2F85C210E78EF003EC166 /* GameViewController.swift */,
@@ -108,6 +108,7 @@
 				TargetAttributes = {
 					A1A2F850210E78EF003EC166 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -134,12 +135,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1D02367210F2A8500BFD8F6 /* hit.mp3 in Resources */,
 				A1A2F860210E78EF003EC166 /* Main.storyboard in Resources */,
-				A1A2F871210E7917003EC166 /* score.mp3 in Resources */,
 				A1A2F862210E78F0003EC166 /* Assets.xcassets in Resources */,
-				A1A2F86F210E7917003EC166 /* hit.mp3 in Resources */,
-				A1A2F870210E7917003EC166 /* music.m4a in Resources */,
 				A1A2F865210E78F0003EC166 /* LaunchScreen.storyboard in Resources */,
+				A1D02366210F2A8500BFD8F6 /* music.m4a in Resources */,
+				A1D02365210F2A8500BFD8F6 /* score.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,7 +306,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rodrigopaschoaletto.FlappyDragon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -323,7 +324,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.rodrigopaschoaletto.FlappyDragon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

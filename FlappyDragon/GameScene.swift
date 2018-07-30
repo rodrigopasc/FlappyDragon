@@ -22,6 +22,7 @@ class GameScene: SKScene {
     var gameFinished = false
     var restart = false
     var score: Int = 0
+    static var highScore: Int = 0
     var flyForce: CGFloat = 30.0
     var playerCategory: UInt32 = 1
     var enemyCategory: UInt32 = 2
@@ -130,6 +131,21 @@ class GameScene: SKScene {
         
         // Exibe na tela.
         addChild(intro)
+        
+        // Exibe o high score.
+        self.showHighScore()
+    }
+    
+    func showHighScore() {
+        let highScoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        highScoreLabel.fontSize = 30
+        highScoreLabel.text = "High Score: \(GameScene.highScore)"
+        highScoreLabel.position = CGPoint(x: self.size.width/2, y: 15)
+        highScoreLabel.zPosition = 3
+        
+        if GameScene.highScore > 0 {
+         addChild(highScoreLabel)
+        }
     }
     
     func addPlayer() {
@@ -245,12 +261,21 @@ class GameScene: SKScene {
         addChild(laser)
     }
     
+    func showScore() {
+        let showScoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        showScoreLabel.fontSize = 30
+        showScoreLabel.text = "Score: \(score)"
+        showScoreLabel.position = CGPoint(x: self.size.width/2, y: 15)
+        showScoreLabel.zPosition = 5
+        addChild(showScoreLabel)
+    }
+    
     func gameOver() {
         // Para o tempo do jogo.
         timer.invalidate()
         
         // Altera as informações do elemento player.
-        player.zPosition = 0
+        player.zRotation = 0
         player.texture = SKTexture(imageNamed: "playerDead")
         
         // Para todas as ações do jogo.
@@ -265,6 +290,11 @@ class GameScene: SKScene {
         gameFinished = true
         gameStarted = false
         
+        // Verifica se é high score.
+        if score > GameScene.highScore {
+            GameScene.highScore = score
+        }
+        
         // Aplica a tela de game over.
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { (timer) in
             let gameOverLabel = SKLabelNode(fontNamed: "Chalkduster")
@@ -274,6 +304,7 @@ class GameScene: SKScene {
             gameOverLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
             gameOverLabel.zPosition = 5
             self.addChild(gameOverLabel)
+            self.showScore()
             self.restart = true
         }
     }
