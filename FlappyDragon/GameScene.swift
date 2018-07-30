@@ -70,6 +70,42 @@ class GameScene: SKScene {
         
         // Exibe na tela.
         addChild(floor)
+        
+        // Adiciona os limites invisíveis do cenário.
+        invisibleRoof()
+        invisibleFloor()
+    }
+    
+    func invisibleFloor() {
+        // Define a sprite node.
+        let invisibleFloor = SKNode()
+        
+        // Define a física do elemento.
+        invisibleFloor.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width, height: 1))
+        invisibleFloor.physicsBody?.isDynamic = false
+        
+        // Define as posições do elemento.
+        invisibleFloor.position = CGPoint(x: size.width/2, y: size.height - gameArea)
+        invisibleFloor.zPosition = 2
+        
+        // Exibe na tela.
+        addChild(invisibleFloor)
+    }
+    
+    func invisibleRoof() {
+        // Define a sprite node.
+        let invisibleRoof = SKNode()
+        
+        // Define a física do elemento.
+        invisibleRoof.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width, height: 1))
+        invisibleRoof.physicsBody?.isDynamic = false
+        
+        // Define as posições do elemento.
+        invisibleRoof.position = CGPoint(x: size.width/2, y: size.height)
+        invisibleRoof.zPosition = 2
+        
+        // Exibe na tela.
+        addChild(invisibleRoof)
     }
     
     func addIntro() {
@@ -130,6 +166,60 @@ class GameScene: SKScene {
         addChild(scoreLabel)
     }
     
+    func spawnEnemies() {
+        // Define a posição inicial do inimigo.
+        let initialPosition = CGFloat(arc4random_uniform(132) + 74)
+        
+        // Define o número do inimigo (para carrega a imagem correta).
+        let enemyNumber = Int(arc4random_uniform(4) + 1)
+        
+        // Define a distância do inimigo na tela.
+        let enemiesDistance = self.player.size.height * 2.5
+        
+        // Cria os Sprite Nodes dos inimigos.
+        let enemyTop = SKSpriteNode(imageNamed: "enemytop\(enemyNumber)")
+        let enemyBottom = SKSpriteNode(imageNamed: "enemybottom\(enemyNumber)")
+        
+        // Define o tamanho dos inimigos.
+        let enemyWidth = enemyTop.size.width
+        let enemyHeight = enemyTop.size.height
+        
+        // Define as posições dos elementos.
+        enemyTop.position = CGPoint(x: size.width + enemyWidth/2, y: size.height - initialPosition + enemyHeight/2)
+        enemyBottom.position = CGPoint(x: size.width + enemyWidth/2, y: enemyTop.position.y - enemyTop.size.height - enemiesDistance)
+        enemyTop.zPosition = 1
+        enemyBottom.zPosition = 1
+        
+        // Aplica a física aos elementos.
+        enemyTop.physicsBody = SKPhysicsBody(rectangleOf: enemyTop.size)
+        enemyBottom.physicsBody = SKPhysicsBody(rectangleOf: enemyBottom.size)
+        enemyTop.physicsBody?.isDynamic = false
+        enemyBottom.physicsBody?.isDynamic = false
+        
+        // Define a distância do elemento.
+        let distance = size.width + enemyWidth
+        
+        // Define a duração do elemento.
+        let duration = Double(distance)/velocity
+        
+        // Inicia a animação do elemento.
+        let moveAction = SKAction.moveBy(x: -distance, y: 0, duration: duration)
+        
+        // Retira o elemento da tela.
+        let removeAction = SKAction.removeFromParent()
+        
+        // Array de sequência da animação.
+        let sequenceAction = SKAction.sequence([moveAction, removeAction])
+        
+        // Executa a animação.
+        enemyTop.run(sequenceAction)
+        enemyBottom.run(sequenceAction)
+        
+        // Exibe na tela.
+        addChild(enemyTop)
+        addChild(enemyBottom)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !gameFinished {
             if !gameStarted {
@@ -153,8 +243,13 @@ class GameScene: SKScene {
                 
                 // Define que o jogo começou.
                 gameStarted = true
+                
+                // Adiciona os inimigos na tela.
+                Timer.scheduledTimer(withTimeInterval: 2.5, repeats: true, block: { (timer) in
+                    self.spawnEnemies()
+                })
             } else {
-                // Define a velocidade do objeto como zero. (Teríamos problema com gravidade caso não definissemos como zero)
+                // Define a velocidade do objeto como zero. (Teríamos problema com gravidade caso não definíssemos como zero)
                 player.physicsBody?.velocity = CGVector.zero
                 
                 // Aplica o impulso quando o jogador toca na tela.
