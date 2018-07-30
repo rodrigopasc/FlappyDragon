@@ -11,6 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    // Define variáveis.
     var floor: SKSpriteNode!
     var intro: SKSpriteNode!
     var player: SKSpriteNode!
@@ -25,6 +26,10 @@ class GameScene: SKScene {
     var playerCategory: UInt32 = 1
     var enemyCategory: UInt32 = 2
     var scoreCategory: UInt32 = 4
+    var timer: Timer!
+    weak var gameViewController: GameViewController?
+    let scoreSound = SKAction.playSoundFileNamed("score.mp3", waitForCompletion: false)
+    let gameOverSound = SKAction.playSoundFileNamed("hit.mp3", waitForCompletion: false)
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -181,7 +186,7 @@ class GameScene: SKScene {
         let enemyNumber = Int(arc4random_uniform(4) + 1)
         
         // Define a distância do inimigo na tela.
-        let enemiesDistance = self.player.size.height * 2.5
+        let enemiesDistance = self.player.size.height * 3.0
         
         // Cria os Sprite Nodes dos inimigos.
         let enemyTop = SKSpriteNode(imageNamed: "enemytop\(enemyNumber)")
@@ -207,6 +212,7 @@ class GameScene: SKScene {
         enemyBottom.physicsBody?.categoryBitMask = enemyCategory
         enemyBottom.physicsBody?.contactTestBitMask = playerCategory
         
+        // Define o laser e sua física.
         let laser = SKNode()
         laser.position = CGPoint(x: enemyTop.position.x + enemyWidth/2, y: enemyTop.position.y - enemyTop.size.height/2 - enemiesDistance/2)
         laser.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 1, height: enemiesDistance))
@@ -239,6 +245,39 @@ class GameScene: SKScene {
         addChild(laser)
     }
     
+    func gameOver() {
+        // Para o tempo do jogo.
+        timer.invalidate()
+        
+        // Altera as informações do elemento player.
+        player.zPosition = 0
+        player.texture = SKTexture(imageNamed: "playerDead")
+        
+        // Para todas as ações do jogo.
+        for node in self.children {
+            node.removeAllActions()
+        }
+        
+        // Desativa a gravidade do elemento player.
+        player.physicsBody?.isDynamic = false
+        
+        // Altera os booleans de controle do jogo.
+        gameFinished = true
+        gameStarted = false
+        
+        // Aplica a tela de game over.
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { (timer) in
+            let gameOverLabel = SKLabelNode(fontNamed: "Chalkduster")
+            gameOverLabel.fontColor = .red
+            gameOverLabel.fontSize = 40
+            gameOverLabel.text = "Game Over"
+            gameOverLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+            gameOverLabel.zPosition = 5
+            self.addChild(gameOverLabel)
+            self.restart = true
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !gameFinished {
             if !gameStarted {
@@ -261,7 +300,7 @@ class GameScene: SKScene {
                 gameStarted = true
                 
                 // Adiciona os inimigos na tela.
-                Timer.scheduledTimer(withTimeInterval: 2.5, repeats: true, block: { (timer) in
+                timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true, block: { (timer) in
                     self.spawnEnemies()
                 })
             } else {
@@ -270,6 +309,12 @@ class GameScene: SKScene {
                 
                 // Aplica o impulso quando o jogador toca na tela.
                 player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: flyForce))
+            }
+        } else {
+            // Reinicia o jogo.
+            if restart {
+                restart = false
+                gameViewController?.presentScene()
             }
         }
     }
@@ -288,11 +333,14 @@ class GameScene: SKScene {
 extension GameScene: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         if gameStarted {
+            // Incrementa o score caso o jogador tenha passado o obstáculo ou aplica o game over.
             if contact.bodyA.categoryBitMask == scoreCategory || contact.bodyB.categoryBitMask == scoreCategory {
                 score += 1
                 scoreLabel.text = "\(score)"
+                run(scoreSound)
             } else if contact.bodyA.categoryBitMask == enemyCategory || contact.bodyB.categoryBitMask == enemyCategory {
-                
+                gameOver()
+                run(gameOverSound)
             }
         }
     }
