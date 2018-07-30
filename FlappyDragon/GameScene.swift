@@ -22,8 +22,13 @@ class GameScene: SKScene {
     var restart = false
     var score: Int = 0
     var flyForce: CGFloat = 30.0
+    var playerCategory: UInt32 = 1
+    var enemyCategory: UInt32 = 2
+    var scoreCategory: UInt32 = 4
     
     override func didMove(to view: SKView) {
+        physicsWorld.contactDelegate = self
+        
         addBackground()
         addFloor()
         addIntro()
@@ -83,6 +88,8 @@ class GameScene: SKScene {
         // Define a física do elemento.
         invisibleFloor.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: size.width, height: 1))
         invisibleFloor.physicsBody?.isDynamic = false
+        invisibleFloor.physicsBody?.categoryBitMask = enemyCategory
+        invisibleFloor.physicsBody?.contactTestBitMask = playerCategory
         
         // Define as posições do elemento.
         invisibleFloor.position = CGPoint(x: size.width/2, y: size.height - gameArea)
@@ -192,9 +199,19 @@ class GameScene: SKScene {
         
         // Aplica a física aos elementos.
         enemyTop.physicsBody = SKPhysicsBody(rectangleOf: enemyTop.size)
-        enemyBottom.physicsBody = SKPhysicsBody(rectangleOf: enemyBottom.size)
         enemyTop.physicsBody?.isDynamic = false
+        enemyTop.physicsBody?.categoryBitMask = enemyCategory
+        enemyTop.physicsBody?.contactTestBitMask = playerCategory
+        enemyBottom.physicsBody = SKPhysicsBody(rectangleOf: enemyBottom.size)
         enemyBottom.physicsBody?.isDynamic = false
+        enemyBottom.physicsBody?.categoryBitMask = enemyCategory
+        enemyBottom.physicsBody?.contactTestBitMask = playerCategory
+        
+        let laser = SKNode()
+        laser.position = CGPoint(x: enemyTop.position.x + enemyWidth/2, y: enemyTop.position.y - enemyTop.size.height/2 - enemiesDistance/2)
+        laser.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 1, height: enemiesDistance))
+        laser.physicsBody?.isDynamic = false
+        laser.physicsBody?.categoryBitMask = scoreCategory
         
         // Define a distância do elemento.
         let distance = size.width + enemyWidth
@@ -214,10 +231,12 @@ class GameScene: SKScene {
         // Executa a animação.
         enemyTop.run(sequenceAction)
         enemyBottom.run(sequenceAction)
+        laser.run(sequenceAction)
         
         // Exibe na tela.
         addChild(enemyTop)
         addChild(enemyBottom)
+        addChild(laser)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -229,18 +248,15 @@ class GameScene: SKScene {
                 // Adiciona o label do score do player.
                 addScore()
                 
-                // Define a física do player como elemento circular.
+                // Define a física do elemento.
                 player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width/2 - 10)
-                
-                // Aplica a gravidade no elemento.
                 player.physicsBody?.isDynamic = true
-                
-                // Adiciona permissão para que o elemento tenha rotações.
                 player.physicsBody?.allowsRotation = true
-                
-                // Aplica o impulso quando o jogador toca na tela.
                 player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: flyForce))
-                
+                player.physicsBody?.categoryBitMask = playerCategory
+                player.physicsBody?.contactTestBitMask = scoreCategory
+                player.physicsBody?.collisionBitMask = enemyCategory
+                    
                 // Define que o jogo começou.
                 gameStarted = true
                 
@@ -265,6 +281,19 @@ class GameScene: SKScene {
             
             // Aplica "animação" para o objeto rotacionar ao cair/receber impulso.
             player.zRotation = yVelocity
+        }
+    }
+}
+
+extension GameScene: SKPhysicsContactDelegate {
+    func didBegin(_ contact: SKPhysicsContact) {
+        if gameStarted {
+            if contact.bodyA.categoryBitMask == scoreCategory || contact.bodyB.categoryBitMask == scoreCategory {
+                score += 1
+                scoreLabel.text = "\(score)"
+            } else if contact.bodyA.categoryBitMask == enemyCategory || contact.bodyB.categoryBitMask == enemyCategory {
+                
+            }
         }
     }
 }
