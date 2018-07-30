@@ -41,7 +41,7 @@ class GameViewController: UIViewController {
         if let musicURL = Bundle.main.url(forResource: "music", withExtension: "m4a") {
             musicPlayer = try! AVAudioPlayer(contentsOf: musicURL)
             musicPlayer.numberOfLoops = -1
-            musicPlayer.volume = 0.2
+            musicPlayer.volume = 0.1
             musicPlayer.play()
         }
     }
