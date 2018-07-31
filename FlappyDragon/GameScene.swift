@@ -17,7 +17,7 @@ class GameScene: SKScene {
     var player: SKSpriteNode!
     var scoreLabel: SKLabelNode!
     var gameArea: CGFloat = 410.0
-    var velocity: Double = 100.0
+    var velocity: Double = 110.0
     var gameStarted = false
     var gameFinished = false
     var restart = false
@@ -202,7 +202,7 @@ class GameScene: SKScene {
         let enemyNumber = Int(arc4random_uniform(4) + 1)
         
         // Define a distância do inimigo na tela.
-        let enemiesDistance = self.player.size.height * 3.0
+        let enemiesDistance = self.player.size.height * 2.5
         
         // Cria os Sprite Nodes dos inimigos.
         let enemyTop = SKSpriteNode(imageNamed: "enemytop\(enemyNumber)")
