@@ -20,7 +20,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         // Define as informações de visualização.
-        stage = view as! SKView
+        stage = (view as! SKView)
         stage.ignoresSiblingOrder = true
         
         // Exibe no app.
