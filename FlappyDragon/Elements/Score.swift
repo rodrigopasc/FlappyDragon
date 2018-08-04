@@ -12,7 +12,7 @@ class Score {
     var scene: SKScene
     
     var scoreLabel: SKLabelNode!
-    var score: Int = 0
+    var instance: Int = 0
     
     init(scene: SKScene) {
         self.scene = scene
@@ -24,7 +24,7 @@ class Score {
         
         // Formatação do texto do label.
         scoreLabel.fontSize = 94
-        scoreLabel.text = "\(score)"
+        scoreLabel.text = "\(instance)"
         scoreLabel.alpha = 0.8
         
         // Define as posições do elemento.
@@ -35,12 +35,10 @@ class Score {
         scene.addChild(scoreLabel)
     }
     
-    
-    
     func show() {
         let showScoreLabel = SKLabelNode(fontNamed: "Chalkduster")
         showScoreLabel.fontSize = 30
-        showScoreLabel.text = "Score: \(score)"
+        showScoreLabel.text = "Score: \(instance)"
         showScoreLabel.position = CGPoint(x: scene.size.width/2, y: 15)
         showScoreLabel.zPosition = 5
         scene.addChild(showScoreLabel)

@@ -22,12 +22,13 @@
 		A1A2F860210E78EF003EC166 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1A2F85E210E78EF003EC166 /* Main.storyboard */; };
 		A1A2F862210E78F0003EC166 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1A2F861210E78F0003EC166 /* Assets.xcassets */; };
 		A1A2F865210E78F0003EC166 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1A2F863210E78F0003EC166 /* LaunchScreen.storyboard */; };
+		A1ADB0E42114A7FA001B298D /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1ADB0E32114A7FA001B298D /* Sound.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A141CA5D2110BD1A0008D2C1 /* score.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = score.mp3; sourceTree = SOURCE_ROOT; };
-		A141CA5E2110BD1A0008D2C1 /* hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = hit.mp3; sourceTree = SOURCE_ROOT; };
-		A141CA5F2110BD1A0008D2C1 /* music.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = music.m4a; sourceTree = SOURCE_ROOT; };
+		A141CA5D2110BD1A0008D2C1 /* score.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = score.mp3; path = FlappyDragon/score.mp3; sourceTree = SOURCE_ROOT; };
+		A141CA5E2110BD1A0008D2C1 /* hit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = hit.mp3; path = FlappyDragon/hit.mp3; sourceTree = SOURCE_ROOT; };
+		A141CA5F2110BD1A0008D2C1 /* music.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = music.m4a; path = FlappyDragon/music.m4a; sourceTree = SOURCE_ROOT; };
 		A16B10EE2113A18000C9B10E /* Floor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
 		A16B10F02113A18C00C9B10E /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		A16B10F22113A19900C9B10E /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
@@ -42,6 +43,7 @@
 		A1A2F861210E78F0003EC166 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1A2F864210E78F0003EC166 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A1A2F866210E78F0003EC166 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1ADB0E32114A7FA001B298D /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				A16B10F22113A19900C9B10E /* Enemy.swift */,
 				A16B10F42113A1A500C9B10E /* Player.swift */,
 				A16B10F92113AA0A00C9B10E /* Score.swift */,
+				A1ADB0E32114A7FA001B298D /* Sound.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -94,12 +97,13 @@
 		A1A2F853210E78EF003EC166 /* FlappyDragon */ = {
 			isa = PBXGroup;
 			children = (
+				A1ADB0E52114AAAF001B298D /* SFX */,
 				A16B10F62113A2BA00C9B10E /* Protocols */,
 				A16B10ED2113A15B00C9B10E /* Elements */,
+				A1A2F854210E78EF003EC166 /* AppDelegate.swift */,
 				A141CA5E2110BD1A0008D2C1 /* hit.mp3 */,
 				A141CA5F2110BD1A0008D2C1 /* music.m4a */,
 				A141CA5D2110BD1A0008D2C1 /* score.mp3 */,
-				A1A2F854210E78EF003EC166 /* AppDelegate.swift */,
 				A1A2F85A210E78EF003EC166 /* GameScene.swift */,
 				A1A2F85C210E78EF003EC166 /* GameViewController.swift */,
 				A1A2F85E210E78EF003EC166 /* Main.storyboard */,
@@ -108,6 +112,13 @@
 				A1A2F866210E78F0003EC166 /* Info.plist */,
 			);
 			path = FlappyDragon;
+			sourceTree = "<group>";
+		};
+		A1ADB0E52114AAAF001B298D /* SFX */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SFX;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,6 +201,7 @@
 				A16B10F32113A19900C9B10E /* Enemy.swift in Sources */,
 				A1A2F85D210E78EF003EC166 /* GameViewController.swift in Sources */,
 				A16B10F82113A2DA00C9B10E /* Scene.swift in Sources */,
+				A1ADB0E42114A7FA001B298D /* Sound.swift in Sources */,
 				A16B10F52113A1A500C9B10E /* Player.swift in Sources */,
 				A1A2F855210E78EF003EC166 /* AppDelegate.swift in Sources */,
 				A16B10FA2113AA0A00C9B10E /* Score.swift in Sources */,

@@ -32,7 +32,7 @@ class Enemy {
         let enemyNumber = Int(arc4random_uniform(4) + 1)
         
         // Define a distância do inimigo na tela.
-        let enemiesDistance = player.player.size.height * 2.5
+        let enemiesDistance = player.instance.size.height * 2.5
         
         // Cria os Sprite Nodes dos inimigos.
         let enemyTop = SKSpriteNode(imageNamed: "enemytop\(enemyNumber)")
