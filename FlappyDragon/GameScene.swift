@@ -154,8 +154,8 @@ extension GameScene: SKPhysicsContactDelegate {
         if gameStarted {
             // Incrementa o score caso o jogador tenha passado o obstáculo ou aplica o game over.
             if contact.bodyA.categoryBitMask == scoreCategory || contact.bodyB.categoryBitMask == scoreCategory {
-                score.instance += 1
-                scoreLabel.text = "\(score.instance)"
+                score.playerScore += 1
+                score.scoreLabel.text = "\(score.playerScore)"
                 self.sound.playScoreSound()
             } else if contact.bodyA.categoryBitMask == enemyCategory || contact.bodyB.categoryBitMask == enemyCategory {
                 gameOver()
