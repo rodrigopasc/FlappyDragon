@@ -10,40 +10,27 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene, Scene {
-    
+    // Define variáveis.
     var floor: Floor!
     var background: Background!
     var player: Player!
     var enemy: Enemy!
     var score: Score!
-    
-    // Define variáveis.
-    
-    var intro: SKSpriteNode!
+    var sound: Sound!
 
+    var intro: SKSpriteNode!
     var scoreLabel: SKLabelNode!
-    
     var gameArea: CGFloat = 410.0
-    
     var gameStarted = false
     var gameFinished = false
-    
     var restart = false
-    
     var flyForce: CGFloat = 30.0
-    
     var playerCategory: UInt32 = 1
     var enemyCategory: UInt32 = 2
     var scoreCategory: UInt32 = 4
-    
     var velocity: Double = 110.0
-    
     var timer: Timer!
-    
     var gameViewController: GameViewController?
-    
-    let scoreSound = SKAction.playSoundFileNamed("score.mp3", waitForCompletion: false)
-    let gameOverSound = SKAction.playSoundFileNamed("hit.mp3", waitForCompletion: false)
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -59,11 +46,10 @@ class GameScene: SKScene, Scene {
         
         enemy = Enemy(scene: self, player: player)
         score = Score(scene: self)
+        sound = Sound(scene: self)
         
         addIntro()
     }
-    
-    
     
     func addIntro() {
         // Define a Sprite com a imagem intro.
@@ -82,8 +68,8 @@ class GameScene: SKScene, Scene {
         timer.invalidate()
         
         // Altera as informações do elemento player.
-        player.player.zRotation = 0
-        player.player.texture = SKTexture(imageNamed: "playerDead")
+        player.instance.zRotation = 0
+        player.instance.texture = SKTexture(imageNamed: "playerDead")
         
         // Para todas as ações do jogo.
         for node in self.children {
@@ -91,7 +77,7 @@ class GameScene: SKScene, Scene {
         }
         
         // Desativa a gravidade do elemento player.
-        player.player.physicsBody?.isDynamic = false
+        player.instance.physicsBody?.isDynamic = false
         
         // Altera os booleans de controle do jogo.
         gameFinished = true
@@ -121,14 +107,14 @@ class GameScene: SKScene, Scene {
                 self.score.setup()
                 
                 // Define a física do elemento.
-                player.player.physicsBody = SKPhysicsBody(circleOfRadius: player.player.size.width / 2 - 10)
-                player.player.physicsBody?.isDynamic = true
-                player.player.physicsBody?.allowsRotation = true
-                player.player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: flyForce))
-                player.player.physicsBody?.categoryBitMask = playerCategory
-                player.player.physicsBody?.contactTestBitMask = scoreCategory
-                player.player.physicsBody?.collisionBitMask = enemyCategory
-                    
+                player.instance.physicsBody = SKPhysicsBody(circleOfRadius: player.instance.size.width / 2 - 10)
+                player.instance.physicsBody?.isDynamic = true
+                player.instance.physicsBody?.allowsRotation = true
+                player.instance.physicsBody?.applyImpulse(CGVector(dx: 0, dy: flyForce))
+                player.instance.physicsBody?.categoryBitMask = playerCategory
+                player.instance.physicsBody?.contactTestBitMask = scoreCategory
+                player.instance.physicsBody?.collisionBitMask = enemyCategory
+                
                 // Define que o jogo começou.
                 gameStarted = true
                 
@@ -138,10 +124,10 @@ class GameScene: SKScene, Scene {
                 })
             } else {
                 // Define a velocidade do objeto como zero. (Teríamos problema com gravidade caso não definíssemos como zero)
-                player.player.physicsBody?.velocity = CGVector.zero
+                player.instance.physicsBody?.velocity = CGVector.zero
                 
                 // Aplica o impulso quando o jogador toca na tela.
-                player.player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: flyForce))
+                player.instance.physicsBody?.applyImpulse(CGVector(dx: 0, dy: flyForce))
             }
         } else {
             // Reinicia o jogo.
@@ -151,14 +137,14 @@ class GameScene: SKScene, Scene {
             }
         }
     }
-
+    
     override func update(_ currentTime: TimeInterval) {
         if gameStarted {
             // Define a velocidade do eixo y.
-            let yVelocity = player.player.physicsBody!.velocity.dy * 0.001 as CGFloat
+            let yVelocity = player.instance.physicsBody!.velocity.dy * 0.001 as CGFloat
             
             // Aplica "animação" para o objeto rotacionar ao cair/receber impulso.
-            player.player.zRotation = yVelocity
+            player.instance.zRotation = yVelocity
         }
     }
 }
@@ -168,12 +154,12 @@ extension GameScene: SKPhysicsContactDelegate {
         if gameStarted {
             // Incrementa o score caso o jogador tenha passado o obstáculo ou aplica o game over.
             if contact.bodyA.categoryBitMask == scoreCategory || contact.bodyB.categoryBitMask == scoreCategory {
-                score.score += 1
-                scoreLabel.text = "\(score.score)"
-                run(scoreSound)
+                score.playerScore += 1
+                score.scoreLabel.text = "\(score.playerScore)"
+                self.sound.playScoreSound()
             } else if contact.bodyA.categoryBitMask == enemyCategory || contact.bodyB.categoryBitMask == enemyCategory {
                 gameOver()
-                run(gameOverSound)
+                self.sound.playGameOverSound()
             }
         }
     }

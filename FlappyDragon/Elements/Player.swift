@@ -10,7 +10,7 @@ import SpriteKit
 
 class Player {
     var scene: SKScene
-    var player: SKSpriteNode!
+    var instance: SKSpriteNode!
     var gameArea: CGFloat = 410.0
     
     init(scene: SKScene) {
@@ -19,11 +19,11 @@ class Player {
     
     func setup() {
         // Define a Sprite com a imagem player1.
-        player = SKSpriteNode(imageNamed: "player1")
+        instance = SKSpriteNode(imageNamed: "player1")
         
         // Define as posições do elemento.
-        player.position  = CGPoint(x: 60, y: scene.size.height - gameArea / 2)
-        player.zPosition = 4
+        instance.position  = CGPoint(x: 60, y: scene.size.height - gameArea / 2)
+        instance.zPosition = 4
         
         // Define o array de texturas do player.
         var playerTextures = [SKTexture]()
@@ -40,9 +40,9 @@ class Player {
         let repeatAction = SKAction.repeatForever(animationAction)
         
         // Executa a animação.
-        player.run(repeatAction)
+        instance.run(repeatAction)
         
         // Exibe na tela.
-        scene.addChild(player)
+        scene.addChild(instance)
     }
 }
