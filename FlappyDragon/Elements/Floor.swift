@@ -9,7 +9,6 @@
 import SpriteKit
 
 class Floor {
-    
     var scene: SKScene
     var floor: SKSpriteNode!
     var gameArea: CGFloat = 410.0

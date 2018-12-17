@@ -9,28 +9,25 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene, Scene {
-    // Define variáveis.
+class GameScene: SKScene {
     var floor: Floor!
     var background: Background!
     var player: Player!
     var enemy: Enemy!
     var score: Score!
     var sound: Sound!
-
     var intro: SKSpriteNode!
-    var scoreLabel: SKLabelNode!
-    var gameArea: CGFloat = 410.0
+    var timer: Timer!
+    var gameViewController: GameViewController?
     var gameStarted = false
     var gameFinished = false
     var restart = false
-    var flyForce: CGFloat = 30.0
-    var playerCategory: UInt32 = 1
-    var enemyCategory: UInt32 = 2
-    var scoreCategory: UInt32 = 4
-    var velocity: Double = 110.0
-    var timer: Timer!
-    var gameViewController: GameViewController?
+    
+    let flyForce: CGFloat = 30.0
+    let playerCategory: UInt32 = 1
+    let enemyCategory: UInt32 = 2
+    let scoreCategory: UInt32 = 4
+    let velocity: Double = 110.0
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self

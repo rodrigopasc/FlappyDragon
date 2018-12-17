@@ -9,7 +9,6 @@
 import SpriteKit
 
 class Enemy {
-    
     var scene: SKScene
     var player: Player
     

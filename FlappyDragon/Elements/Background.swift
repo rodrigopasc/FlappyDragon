@@ -9,7 +9,6 @@
 import SpriteKit
 
 class Background {
-    
     var scene: SKScene
     
     init(scene: SKScene) {

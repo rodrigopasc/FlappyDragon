@@ -9,7 +9,6 @@
 import SpriteKit
 
 class Sound {
-    // Define variáveis.
     var scene: SKScene
     let scoreSound = SKAction.playSoundFileNamed("score.mp3", waitForCompletion: false)
     let gameOverSound = SKAction.playSoundFileNamed("hit.mp3", waitForCompletion: false)

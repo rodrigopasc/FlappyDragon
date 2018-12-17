@@ -10,7 +10,6 @@ import SpriteKit
 
 class Score {
     var scene: SKScene
-    
     var scoreLabel: SKLabelNode!
     var playerScore: Int = 0
     
